@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
   root 'pages#index'
-
+  
   get 'pages/show'
 
   devise_for :users, :controllers => {
    :registrations => 'users/registrations',
    :sessions => 'users/sessions'
   }
+  
+  resources :kintais
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

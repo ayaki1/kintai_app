@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">
+    <%= fa_icon "clock-o", text: "勤怠" %>
+  </h1>
+</div>
+
+<% if @kintai.finished_at %>
+  本日もお疲れ様でした。
+<% else %>
+  <% if @kintai.new_record? %>
+    <div class="jumbotron text-center">
+      <h1 id="time" class="display-3"></h1>
+      <hr class="my-4">
+      <p class="lead">
+        おはようございます！<br>
+        本日も1日頑張って行きましょう！
+      </p>
+      <%= link_to fa_icon("sign-in 6x", text: '出勤'), kintais_path, method: :post, class: 'btn btn-primary btn-lg btn-block' %>
+    </div>
+  <% else %>
+    <div class="jumbotron text-center">
+      <h1 id="time" class="display-3"></h1>
+      <hr class="my-4">
+      <%= link_to fa_icon("sign-out 6x", text: '退勤'), kintai_path(@kintai), method: :patch, class: 'btn btn-primary btn-lg btn-block' %>
+    </div>
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+<!--
+function RealTimer() {
+  var date = new Date();
+  var time = date.toLocaleString();
+  var hour = date.getHours();
+  var min  = date.getMinutes();
+  var sec  = date.getSeconds();
+  if(hour < 10){ hour = "0" + hour; }
+  if(min < 10) { min = "0" + min; }
+  if(sec < 10) { sec = "0" + sec; }
+
+  $("#time").text(time);
+	setTimeout(RealTimer, 1000);
+}
+window.onload = RealTimer;
+// -->
+</script>
+

@@ -7,23 +7,59 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-    <header>
-        <nav>
-            <% if user_signed_in? %>
-                <strong><%= link_to current_user.username, pages_show_path %></strong>
-                <%= link_to 'プロフィール変更', edit_user_registration_path %>
-                <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-            <% else %>
-                <%= link_to 'サインアップ', new_user_registration_path %>
-                <%= link_to 'ログイン', new_user_session_path %>
-            <% end %>
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+    
+    <% if user_signed_in? %>
+       <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+          <a class="navbar-brand col-sm-3 col-md-10 mr-0" href="<% root_path %>">勤怠管理 ver.1.0</a>
+          <%= link_to 'ホーム', root_path, class: 'text-white' %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'text-white' %>
+
+          <ul class="navbar-nav px-3">
+            <li class="nav-item">
+              <a href="<%= edit_user_registration_path %>">
+                <%= fa_icon "user-circle", class: 'nav-link' %>
+              </a>
+            </li>
+          </ul>
         </nav>
-    </header>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-<%= yield %>
-
+        <div class="container-fluid">
+          <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+              <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="<%= new_kintai_path %>">
+                      <%= fa_icon "clock-o fw", text: "勤怠" %>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <%= fa_icon "question fw", text: "項目未定" %>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <%= fa_icon "question fw", text: "項目未定" %>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+    
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+              <%= yield %>
+            </main>
+          </div>
+        </div>
+    <% else %>
+        <%= link_to 'サインアップ', new_user_registration_path %>
+        <%= link_to 'ログイン', new_user_session_path %>
+        
+        <%= yield %>
+    <% end %>
 </body>
 </html>

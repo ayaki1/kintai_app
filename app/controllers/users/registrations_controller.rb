@@ -11,7 +11,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
+    @user = User.new(sign_up_params)
+    @user.skip_confirmation!
+    if @user.save
+      redirect_to root_path, flash: { notice: 'sign up' }
+    else
+      render :new
+    end
   end
 
   # GET /resource/edit
