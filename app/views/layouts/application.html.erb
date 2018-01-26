@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DeviseQiita</title>
+  <title>勤怠管理くん</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-    <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= message_type %>"><%= message %></div>
-    <% end %>
-    
     <% if user_signed_in? %>
        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
           <a class="navbar-brand col-sm-3 col-md-10 mr-0" href="<% root_path %>">勤怠管理 ver.1.0</a>
@@ -25,6 +21,10 @@
             </li>
           </ul>
         </nav>
+
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
 
         <div class="container-fluid">
           <div class="row">
@@ -56,6 +56,9 @@
           </div>
         </div>
     <% else %>
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
         <%= link_to 'サインアップ', new_user_registration_path %>
         <%= link_to 'ログイン', new_user_session_path %>
         

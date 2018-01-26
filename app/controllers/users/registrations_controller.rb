@@ -11,10 +11,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    @user = User.new(sign_up_params)
+    @user = User.new(sign_up_params.merge(name: params[:name]))
     @user.skip_confirmation!
     if @user.save
-      redirect_to root_path, flash: { notice: 'sign up' }
+      flash[:success] = '登録完了しました。'
+      redirect_to root_path
     else
       render :new
     end
