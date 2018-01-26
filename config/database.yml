@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  username: kintai
+  password: password
+  host: localhost
+  template: template0
+
+development:
+  <<: *default
+  database: kintai_dev
+
+test:
+  <<: *default
+  database: kintai_test
+
+production:
+  <<: *default
+  database: kintai
